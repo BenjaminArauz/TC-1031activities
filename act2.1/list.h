@@ -221,20 +221,29 @@ T List<T>::last() const {
 // @returns the element in index
 // @throws IndexOutOfBounds, if index >= size.
 // =================================================================
+/*
+El grado de complejidad de esta clase es de O(n), puesto que solo existe 
+un ciclo while.
+*/
 template <class T>
 T List<T>::get(uint index) const {
 	T aux;
 	if (index < size && index >= 0){
+		//Creacion de variables
 		int count = 0;
 		Node<T> *ptr;
+		//El apuntador inicia en el head
 		ptr = head;
+		//Se ubica el apuntador en el elemento del indice
 		while (count != index && ptr->next != NULL){
 			count++;
 			ptr = ptr->next;
 		}
+		//Se actualiza la variable aux con el valor
 		aux = ptr->value;
 		return aux;
 	} else {
+		//Manda un error si el indice no esta en el rango
 		throw IndexOutOfBounds();
 	}
 }
@@ -283,25 +292,36 @@ void List<T>::push_back(T val) {
 //
 // @throws IndexOutOfBounds, if index > size.
 // =================================================================
+/*
+El grado de complejidad de esta clase es de O(n), puesto que solo existe 
+un ciclo while.
+*/
 template <class T>
 void List<T>::insert_at(T val, uint index) {
 	if (index >= 0 && index <= size){
+		//Si el indice es el inicio se llama a la funcion para agregar al inicio
 		if (index == 0){
 			push_front(val);
 			return;
-		} 
+		}
+		//Creacion de variables
 		Node<T> *p, *q;
 		int count = 0;
+		//El apuntador inicia en el head
 		p = head;
+		//Se ubica el apuntador en el elemento del indice
 		while (count != index-1 && p->next != NULL){
 			count++;
 			p = p->next;
 		}
-		q = new Node<T>(val);
-		q->next = p->next;
+		q = new Node<T>(val); //Se crea el nuevo nodo
+		//Se actualizan las posiciones de los nodos
+		q->next = p->next; 
 		p->next = q;
+		//Se actualiza el tamano de la lista
 		size++;
 	} else {
+		//Manda un error si el indice no esta en el rango
 		throw IndexOutOfBounds();
 	}
 }
@@ -372,33 +392,42 @@ T List<T>::pop_back() {
 // @returns the element that was in index.
 // @throws IndexOutOfBounds, if index >= size.
 // =================================================================
+/*
+El grado de complejidad de esta clase es de O(n), puesto que solo existe 
+un ciclo while.
+*/
 template <class T>
 T List<T>::remove_at(uint index) {
 	T aux;
 	if (index >= 0 && index < size){
+		//Creacion de variables
 		int count = 0;
 		Node<T> *p, *q;
-
+		//El apuntador inicia en el head
 		p = head;
-
+		//Si el indice es el inicio se llama a la funcion para eliminar al inicio
 		if (index == 0){
 			aux = p->value;
 			pop_front();
 			return aux;
 		}
-
+		//Se ubica el apuntador en el elemento del indice
 		while (count != index && p->next != NULL){
 			count++;
 			q = p;
 			p = p->next;
 		}
-
+		//Se actualiza los apuntadores 
 		q->next = p->next;
+		//Se actualiza la variable aux con el valor a eliminar
 		aux = p->value;
+		//Elimina el nodo
 		delete p;
+		//Actualiza el tamano de la lista
 		size--;
 		return aux;
 	} else {
+		//Manda un error si el indice no esta en el rango
 		throw IndexOutOfBounds();
 	}
 }
@@ -409,18 +438,27 @@ T List<T>::remove_at(uint index) {
 // @returns the position of an item in the list, -1 otherwise.
 // @throws IndexOutOfBounds, if index >= size.
 // =================================================================
+/*
+El grado de complejidad de esta clase es de O(n), puesto que solo existe 
+un ciclo while.
+*/
 template <class T>
 long int List<T>::indexOf(T val) const {
+	//Creacion de variables
 	Node<T> *ptr;
 	int count = 0;
+	//El apuntador inicia en el head
 	ptr = head;
+	//Se ubica el apuntador en el elemento del indice
 	while ((ptr != NULL)){
+		//Si el valor del usuario coincide con el valor del nodo devuelve la posicion
 		if (val == ptr->value){
 			return count;
 		}
 		count++;
 		ptr = ptr->next;
 	}
+	//Si no se encontro nada, devuelve -1
 	return -1;
 }
 
