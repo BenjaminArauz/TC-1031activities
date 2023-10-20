@@ -7,6 +7,7 @@
 // =================================================================
 #include <iostream>
 #include <list>
+#include <algorithm>
 
 using namespace std;
 
@@ -23,7 +24,7 @@ void advance_itr(list<int>::iterator &itr, list<int> &lst){
 }
 
 //Función para encontrar la posicion
-//Complejidad de esta función es O(n)
+//Complejidad de esta función es O(n^2)
 int find_position(list<int> lst, int k, int n){
 	//Creación de variables
 	list<int>::iterator kill; //Creamos un iterador para guardar la posición de quien murió.
@@ -31,7 +32,7 @@ int find_position(list<int> lst, int k, int n){
 	int survive; //Se va a guardar el sobreviviente
 
 	//Se va a parar el ciclo cuando exista solo un sobreviviente
-	for (auto itr = lst.begin(); lst.size() != 1; advance_itr(itr, lst)){
+	for (auto itr = lst.begin(); lst.size() != 1; advance_itr(itr, lst), i++){
 		//Se busca a la persona que muere
 		if (i == k){
 			kill = itr; //Se guarda a la persona que muere
@@ -59,8 +60,6 @@ int find_position(list<int> lst, int k, int n){
 				}	
 			}
 		}
-		//Aumenta el indicador
-		i++;
 	}
 	//La persona sobreviviente es 
 	survive = *lst.begin();
